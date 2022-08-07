@@ -1,8 +1,7 @@
 from win32gui import IsWindow, IsWindowEnabled, IsWindowVisible, GetWindowText, EnumWindows, FindWindow
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QImage
 from sys import argv
-from cv2 import cvtColor, COLOR_BGR2GRAY, imshow, waitKey, imread
+from cv2 import cvtColor, COLOR_BGR2GRAY
 from numpy import frombuffer, uint8
 from qimage2ndarray import rgb_view
 
