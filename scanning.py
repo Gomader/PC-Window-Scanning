@@ -1,8 +1,8 @@
 from win32gui import IsWindow, IsWindowEnabled, IsWindowVisible, GetWindowText, EnumWindows, FindWindow
 from PyQt5.QtWidgets import QApplication
 from sys import argv
-from cv2 import cvtColor, COLOR_BGR2GRAY
-from numpy import frombuffer, uint8
+from cv2 import cvtColor, COLOR_BGR2GRAY, matchTemplate, TM_CCOEFF_NORMED
+from numpy import where
 from qimage2ndarray import rgb_view
 
 
@@ -50,6 +50,15 @@ def getScreenShot(windowname):
     return img_gray
     
     
-
-if __name__ == '__main__':
-    getScreenShot()
+'''
+    Image matching function
+    return a center point position (x,y)
+'''
+def imageMatching(source, icon):
+    h, w = icon.shape[:2]
+    res = matchTemplate(source, icon, TM_CCOEFF_NORMED)
+    loc = where(res >= 0.6)
+    for pt in zip(*loc[::-1]):
+        center = (pt[0] + int(w/2), pt[1] + int(h/2))
+        return center
+        
